@@ -589,8 +589,8 @@ function animate() {
         const activeImg = div.querySelector('img[style*="opacity: 1"]') || div.querySelector('img');
         if (activeImg) {
             let blurAmount = 0;
-            if (distance > 1500) {
-                blurAmount = ((distance - 1500) / 3000) * 15; // Max 15px bluru
+            if (distance > 3000) {
+                blurAmount = ((distance - 3000) / 3000) * 15; // Max 15px bluru
             }
             blurAmount = Math.max(0, Math.min(15, blurAmount));
             div.style.filter = `blur(${blurAmount}px)`;
