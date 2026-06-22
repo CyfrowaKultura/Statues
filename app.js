@@ -164,6 +164,28 @@ window.addEventListener('wheel', (e) => {
     }
 });
 
+// Pozwalamy na klikanie "gdziekolwiek" na ekranie, jeśli najbliższym obiektem jest filmik
+window.addEventListener('click', (e) => {
+    if (introState < 2) return;
+    
+    const allLayers = Array.from(document.querySelectorAll('.layer[data-layer-type$="_fg"]')).filter(l => l.dataset.shattered === "false");
+    let closestLayer = null;
+    let minDistance = Infinity;
+    
+    allLayers.forEach(l => {
+        const z = parseFloat(l.dataset.z);
+        const distance = -(z + currentTranslateZ);
+        if (distance > -1000 && distance < minDistance) {
+            minDistance = distance;
+            closestLayer = l;
+        }
+    });
+
+    if (closestLayer && minDistance < 5000 && closestLayer.dataset.isVideo === "true") {
+        triggerNextAction();
+    }
+});
+
 let introState = 0; // 0 = h2 ukryte, 1 = h2 widoczne, 2 = jazda
 
 const introScreenElement = document.getElementById('intro-screen');
