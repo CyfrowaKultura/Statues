@@ -46,9 +46,9 @@ const camera = document.getElementById('camera');
 
 // SHATTER SOUNDS
 const shatterSoundUrls = [
-    "ElevenLabs_Delikatny_dźwięk_przesuwającego_się_lodu,_ostrożny_ruch_w_mroźnym_powietrzu.mp3",
-    "ElevenLabs_Ostry_trzask,_jak_łamanie_gałązki_–_krótki_i_zaskakujący.mp3",
-    "ElevenLabs_Ostry_trzask_niosący_się_po_zamarzniętym_krajobrazie,_jakby_lód_pękał_pod_naciskiem.mp3"
+    "shatter_1.mp3",
+    "shatter_2.mp3",
+    "shatter_3.mp3"
 ];
 
 function playRandomShatterSound() {
