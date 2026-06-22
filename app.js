@@ -630,6 +630,13 @@ function spawnNextGroup() {
     let groupXOffset = (Math.random() * 1600) - 800;
     let groupYOffset = (Math.random() * 400) - 200;
     
+    // Jeśli smartfon w pionie, bardzo malutki rozrzut, bo obrazki mają tylko 1200px
+    const isPortrait = window.innerHeight > window.innerWidth && window.innerWidth < 768;
+    if (isPortrait) {
+        groupXOffset = (Math.random() * 400) - 200;
+        groupYOffset = (Math.random() * 100) - 50;
+    }
+    
     // Pierwsze zdjęcie na samym środku
     if (nextSpawnIndex === 1) {
         groupXOffset = 0;

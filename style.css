@@ -111,7 +111,7 @@ body {
 }
 .layer img {
     width: 4500px;
-    height: 4500px;
+    height: auto;
     object-fit: contain;
     user-select: none;
     -webkit-user-drag: none;
@@ -280,5 +280,9 @@ body {
     }
     #depth-slider-container {
         display: none; /* Ukrywamy suwak, by zablokować ręczny zoom out na smartfonie */
+    }
+    .layer img {
+        width: 1200px !important;
+        height: auto !important;
     }
 }
