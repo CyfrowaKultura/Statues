@@ -43,6 +43,27 @@ const QUOTES = [
 ];
 const container = document.getElementById('scene-container');
 const camera = document.getElementById('camera');
+
+// AUDIO LOGIC
+const audioToggle = document.getElementById('audio-toggle');
+const bgAudio = document.getElementById('bg-audio');
+if (bgAudio) bgAudio.volume = 0.5; // subtelny dźwięk
+let isAudioPlaying = false;
+if (audioToggle && bgAudio) {
+    audioToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isAudioPlaying) {
+            bgAudio.pause();
+            audioToggle.innerText = "🔇";
+            isAudioPlaying = false;
+        } else {
+            bgAudio.play().catch(e => console.log("Audio play blocked", e));
+            audioToggle.innerText = "🔊";
+            isAudioPlaying = true;
+        }
+    });
+}
+
 const depthSlider = { min: "-500", max: "500000", value: "0" };
 
 let isDragging = false;
@@ -154,6 +175,13 @@ if (introScreenElement) {
             const h2 = introScreenElement.querySelector('h2');
             if (h2) h2.classList.add('visible');
             introState = 1;
+            
+            // Autoplay audio on first interaction
+            if (bgAudio && !isAudioPlaying) {
+                bgAudio.play().catch(e => console.log(e));
+                audioToggle.innerText = "🔊";
+                isAudioPlaying = true;
+            }
         } else if (introState === 1) {
             introState = 2;
             
@@ -177,7 +205,8 @@ if (introScreenElement) {
                 const firstLayer = document.querySelector('.layer');
                 if (firstLayer) {
                     const z = parseFloat(firstLayer.dataset.z);
-                    targetTranslateZ = -z - 2000;
+                    const isVideo = firstLayer.dataset.isVideo === "true";
+                    targetTranslateZ = isVideo ? -z - 2000 : -z - 500;
                     depthSlider.value = targetTranslateZ;
                     
                     cameraSpeed = 15;
@@ -215,7 +244,10 @@ if (quoteOverlay) {
         if (allLayers.length > 0) {
             // Najbliższa z dostępnych w głębi
             const nextZ = Math.max(...allLayers.map(l => parseFloat(l.dataset.z)));
-            targetTranslateZ = -nextZ - 2000; // Przywrócono stary zoom
+            const nextGroup = allLayers.find(l => parseFloat(l.dataset.z) === nextZ);
+            const isVideo = nextGroup.dataset.isVideo === "true";
+            
+            targetTranslateZ = isVideo ? -nextZ - 2000 : -nextZ - 500;
             depthSlider.value = targetTranslateZ;
             
             cameraSpeed = 15; // Stała, kinowa prędkość
@@ -424,6 +456,26 @@ function animate() {
     
     // Zastosuj rotację i głębię
     camera.style.transform = `translateZ(${currentTranslateZ}px) rotateX(${currentRotateX}deg) rotateY(${currentRotateY}deg)`;
+
+    // Podświetlenie klikalnej ramki na najbliższym obrazku
+    const allLayers = Array.from(document.querySelectorAll('.layer[data-layer-type$="_fg"]')).filter(l => l.dataset.shattered === "false");
+    let closestLayer = null;
+    let minDistance = Infinity;
+    
+    allLayers.forEach(l => {
+        const z = parseFloat(l.dataset.z);
+        const distance = -(z + currentTranslateZ);
+        if (distance > -1000 && distance < minDistance) {
+            minDistance = distance;
+            closestLayer = l;
+        }
+        l.classList.remove('clickable-frame');
+    });
+    
+    // Jeśli najbliższa warstwa jest w odpowiedniej odległości, dodaj klasę podświetlającą
+    if (closestLayer && minDistance < 5000 && minDistance > 0 && introState >= 2) {
+        closestLayer.classList.add('clickable-frame');
+    }
 
     // Fade out and slide up intro screen as user moves forward (Tylko jeśli introState < 2)
     if (typeof introState !== 'undefined' && introState < 2) {
@@ -688,10 +740,25 @@ async function loadScene() {
             return;
         }
 
+        // Wyciągamy pierwsze wymuszone zdjęcie
+        let targetFirst = null;
+        globalManifest = globalManifest.filter(item => {
+            if (item.base_name === "IDG_20260524_220543_781") {
+                targetFirst = item;
+                return false;
+            }
+            return true;
+        });
+
         // Tasowanie (losowa kolejność)
         for (let i = globalManifest.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [globalManifest[i], globalManifest[j]] = [globalManifest[j], globalManifest[i]];
+        }
+        
+        // Dodajemy wymuszone zdjęcie na sam początek
+        if (targetFirst) {
+            globalManifest.unshift(targetFirst);
         }
         
         const oldLayers = camera.querySelectorAll('.layer');
