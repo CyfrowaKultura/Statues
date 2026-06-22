@@ -279,7 +279,4 @@ body {
     #depth-slider-container {
         right: 10px;
     }
-    #scene-container {
-        transform: scale(0.35);
-    }
 }
