@@ -216,8 +216,8 @@ if (introScreenElement) {
                     const z = parseFloat(firstLayer.dataset.z);
                     const isVideo = firstLayer.dataset.isVideo === "true";
                     const isPortrait = window.innerHeight > window.innerWidth && window.innerWidth < 768;
-                    const offsetVideo = isPortrait ? 2500 : 2000;
-                    const offsetPhoto = isPortrait ? 1300 : 500;
+                    const offsetVideo = isPortrait ? 2600 : 2000;
+                    const offsetPhoto = isPortrait ? 2400 : 500;
                     targetTranslateZ = isVideo ? -z - offsetVideo : -z - offsetPhoto;
                     depthSlider.value = targetTranslateZ;
                     
@@ -260,8 +260,8 @@ if (quoteOverlay) {
             const isVideo = nextGroup.dataset.isVideo === "true";
             
             const isPortrait = window.innerHeight > window.innerWidth && window.innerWidth < 768;
-            const offsetVideo = isPortrait ? 2500 : 2000;
-            const offsetPhoto = isPortrait ? 1300 : 500;
+            const offsetVideo = isPortrait ? 2600 : 2000;
+            const offsetPhoto = isPortrait ? 2400 : 500;
             targetTranslateZ = isVideo ? -nextZ - offsetVideo : -nextZ - offsetPhoto;
             depthSlider.value = targetTranslateZ;
             
