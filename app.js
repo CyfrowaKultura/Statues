@@ -544,6 +544,26 @@ function animate() {
         const z = parseFloat(div.dataset.z);
         const distance = -(z + currentTranslateZ); // Odległość od kamery
         
+        // Lazy Loading: Ładujemy tylko obrazki w promieniu od -5000 do 15000
+        const imgs = div.querySelectorAll('img');
+        if (distance > -8000 && distance < 18000) {
+            if (div.dataset.loaded !== "true") {
+                div.dataset.loaded = "true";
+                imgs.forEach(img => {
+                    if (img.dataset.lazySrc && !img.src) {
+                        img.src = img.dataset.lazySrc;
+                    }
+                });
+            }
+        } else {
+            if (div.dataset.loaded === "true") {
+                div.dataset.loaded = "false";
+                imgs.forEach(img => {
+                    img.removeAttribute('src');
+                });
+            }
+        }
+        
         // --- Scrubbing Video ---
         if (div.dataset.isVideo === "true" && div.dataset.shattered === "false") {
             const framesCount = parseInt(div.dataset.frames);
@@ -715,7 +735,7 @@ function spawnNextGroup() {
             const imgClass = layer.type === "video_bg" ? "img-bg frame-img" : "img-fg frame-img";
             
             const img = document.createElement('img');
-            img.src = `assets_generated/${layer.base_name}_frame_0_${suffix}`;
+            img.dataset.lazySrc = `assets_generated/${layer.base_name}_frame_0_${suffix}`;
             img.className = imgClass;
             
             img.style.position = 'absolute';
@@ -731,7 +751,7 @@ function spawnNextGroup() {
         } else {
             div.dataset.isVideo = "false";
             const img = document.createElement('img');
-            img.src = layer.image;
+            img.dataset.lazySrc = layer.image;
             if (layer.type === "photo_bg") img.className = 'img-bg';
             else if (layer.type === "photo_fg") img.className = 'img-fg';
             div.appendChild(img);

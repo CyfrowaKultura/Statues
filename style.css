@@ -8,9 +8,11 @@ body {
     background-color: #1a1a1a;
     color: white;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    overflow: hidden; /* Brak paska przewijania, pełny ekran */
+    overflow: hidden;
     width: 100vw;
     height: 100vh;
+    position: fixed;
+    touch-action: none;
 }
 
 #intro-screen {
