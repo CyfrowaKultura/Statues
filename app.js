@@ -556,10 +556,11 @@ function animate() {
                 
                 if (div.dataset.currentFrameIndex != currentFrameIdx) {
                     div.dataset.currentFrameIndex = currentFrameIdx;
-                    const imgs = div.querySelectorAll('img');
-                    imgs.forEach((img, idx) => {
-                        img.style.opacity = (idx === currentFrameIdx) ? 1 : 0;
-                    });
+                    
+                    const singleImg = div.querySelector('img');
+                    if (singleImg && singleImg.dataset.srcPattern) {
+                        singleImg.src = singleImg.dataset.srcPattern.replace('{i}', currentFrameIdx);
+                    }
                 }
             }
         }
@@ -713,24 +714,20 @@ function spawnNextGroup() {
             const suffix = layer.type === "video_bg" ? "bg.jpg" : "fg.png";
             const imgClass = layer.type === "video_bg" ? "img-bg frame-img" : "img-fg frame-img";
             
-            for (let i = 0; i < layer.frames; i++) {
-                const img = document.createElement('img');
-                img.src = `assets_generated/${layer.base_name}_frame_${i}_${suffix}`;
-                img.className = imgClass;
-                
-                // WSZYSTKIE klatki muszą mieć identyczne pozycjonowanie absolutne z centrowaniem
-                img.style.position = 'absolute';
-                img.style.top = '50%';
-                img.style.left = '50%';
-                img.style.transform = 'translate(-50%, -50%)';
-                
-                if (i === 0) {
-                    img.style.opacity = 1;
-                } else {
-                    img.style.opacity = 0;
-                }
-                div.appendChild(img);
-            }
+            const img = document.createElement('img');
+            img.src = `assets_generated/${layer.base_name}_frame_0_${suffix}`;
+            img.className = imgClass;
+            
+            img.style.position = 'absolute';
+            img.style.top = '50%';
+            img.style.left = '50%';
+            img.style.transform = 'translate(-50%, -50%)';
+            img.style.opacity = 1;
+            
+            // Zapisujemy wzorzec URL do podmiany
+            img.dataset.srcPattern = `assets_generated/${layer.base_name}_frame_{i}_${suffix}`;
+            
+            div.appendChild(img);
         } else {
             div.dataset.isVideo = "false";
             const img = document.createElement('img');
