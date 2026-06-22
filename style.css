@@ -256,3 +256,27 @@ body {
     border: 3px solid rgba(255, 255, 255, 1);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
 }
+
+/* Wersja na smartfony (Pion) */
+@media (max-width: 768px) and (orientation: portrait) {
+    #intro-screen h1 {
+        font-size: 60px;
+        letter-spacing: 5px;
+    }
+    #intro-screen h2 {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+    #click-hint {
+        font-size: 0.9rem;
+        bottom: 20px;
+        right: 20px;
+    }
+    #quote-content {
+        font-size: 24px;
+        width: 90%;
+    }
+    #depth-slider-container {
+        right: 10px;
+    }
+}

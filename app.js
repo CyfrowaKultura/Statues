@@ -215,7 +215,10 @@ if (introScreenElement) {
                 if (firstLayer) {
                     const z = parseFloat(firstLayer.dataset.z);
                     const isVideo = firstLayer.dataset.isVideo === "true";
-                    targetTranslateZ = isVideo ? -z - 2000 : -z - 500;
+                    const isPortrait = window.innerHeight > window.innerWidth && window.innerWidth < 768;
+                    const offsetVideo = isPortrait ? 5000 : 2000;
+                    const offsetPhoto = isPortrait ? 2500 : 500;
+                    targetTranslateZ = isVideo ? -z - offsetVideo : -z - offsetPhoto;
                     depthSlider.value = targetTranslateZ;
                     
                     cameraSpeed = 15;
@@ -256,7 +259,10 @@ if (quoteOverlay) {
             const nextGroup = allLayers.find(l => parseFloat(l.dataset.z) === nextZ);
             const isVideo = nextGroup.dataset.isVideo === "true";
             
-            targetTranslateZ = isVideo ? -nextZ - 2000 : -nextZ - 500;
+            const isPortrait = window.innerHeight > window.innerWidth && window.innerWidth < 768;
+            const offsetVideo = isPortrait ? 5000 : 2000;
+            const offsetPhoto = isPortrait ? 2500 : 500;
+            targetTranslateZ = isVideo ? -nextZ - offsetVideo : -nextZ - offsetPhoto;
             depthSlider.value = targetTranslateZ;
             
             cameraSpeed = 15; // Stała, kinowa prędkość

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zaproszenie - Posągi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap');
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 210mm;
+            height: 297mm;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #111 0%, #000 100%);
+            padding: 40px;
+            box-sizing: border-box;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            letter-spacing: 8px;
+            margin: 0;
+            font-weight: 400;
+            text-transform: uppercase;
+        }
+
+        .header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            letter-spacing: 4px;
+            margin-top: 10px;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+            margin-bottom: 40px;
+            border: 2px solid #222;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .content p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ddd;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+
+        .quote {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 20px;
+            text-align: center;
+            color: #aaa;
+            margin: 30px 0;
+            border-left: 2px solid #555;
+            border-right: 2px solid #555;
+            padding: 0 20px;
+        }
+
+        .cta {
+            margin-top: auto;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cta p {
+            margin: 0 0 15px 0;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .link {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 22px;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed #fff;
+            padding-bottom: 5px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #555;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Posągi</h1>
+            <h2>Krystian Ledzion</h2>
+        </div>
+
+        <div class="image-container">
+            <img src="preview.png" alt="Podgląd projektu">
+        </div>
+
+        <div class="content">
+            <p>
+                Oficjalne zaproszenie do przestrzeni cyfrowej „Posągi” – wizualnej medytacji nad dystansem. To obszar, w którym obraz staje się nieskończonym, głębokim pasażem, badającym granice ludzkiej apatii. Cicha refleksja nad powłoką, którą obrastamy, by chronić własną kruchość.
+            </p>
+            <div class="quote">
+                "Kamyk jest stworzeniem doskonałym, równy samemu sobie, pilnujący swych granic."<br>
+                <span style="font-size: 14px; color: #777; font-style: normal; display: block; margin-top: 10px;">— Zbigniew Herbert</span>
+            </div>
+            <p>
+                Odkrywanie tej przestrzeni wymaga przełamania zastanej formy. Każdy kolejny akt obnaża to, co ukryte pod powierzchnią, zmuszając do konfrontacji z twardą materią obojętności. Przekroczenie tej bariery to jedyna droga do sedna. Zaleca się doświadczanie projektu w słuchawkach – rezonans materii staje się tu ukrytym przewodnikiem.
+            </p>
+        </div>
+
+        <div class="cta">
+            <p>Wejdź do galerii online:</p>
+            <a class="link" href="https://CyfrowaKultura.github.io/Statues/">CyfrowaKultura.github.io/Statues/</a>
+        </div>
+
+        <div class="footer">
+            Krystian Ledzion
+        </div>
+    </div>
+</body>
+</html>
