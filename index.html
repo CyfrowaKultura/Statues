@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Diorama Photobook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="intro-screen">
+        <h1>Posągi</h1>
+        <h2>by Krystian Ledzion</h2>
+    </div>
+    
+    <!-- Wskazówka dla użytkownika -->
+    <div id="click-hint">&lt;click&gt;</div>
+
+    <!-- Główny kontener perspektywy -->
+    
+
+    <div id="scene-container">
+        <!-- Kamera / obracający się kontener -->
+        <div id="camera">
+            <!-- Warstwy będą wstrzykiwane tutaj przez JS -->
+        </div>
+    </div>
+
+    <div id="quote-overlay" class="hidden">
+        <div id="quote-content"></div>
+        <div class="continue-hint">Kliknij, aby pójść dalej</div>
+    </div>
+    
+    <!-- Główny skrypt -->
+    <script src="quotes40.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
