@@ -44,24 +44,18 @@ const QUOTES = [
 const container = document.getElementById('scene-container');
 const camera = document.getElementById('camera');
 
-// AUDIO LOGIC
-const audioToggle = document.getElementById('audio-toggle');
-const bgAudio = document.getElementById('bg-audio');
-if (bgAudio) bgAudio.volume = 0.5; // subtelny dźwięk
-let isAudioPlaying = false;
-if (audioToggle && bgAudio) {
-    audioToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (isAudioPlaying) {
-            bgAudio.pause();
-            audioToggle.innerText = "🔇";
-            isAudioPlaying = false;
-        } else {
-            bgAudio.play().catch(e => console.log("Audio play blocked", e));
-            audioToggle.innerText = "🔊";
-            isAudioPlaying = true;
-        }
-    });
+// SHATTER SOUNDS
+const shatterSoundUrls = [
+    "ElevenLabs_Delikatny_dźwięk_przesuwającego_się_lodu,_ostrożny_ruch_w_mroźnym_powietrzu.mp3",
+    "ElevenLabs_Ostry_trzask,_jak_łamanie_gałązki_–_krótki_i_zaskakujący.mp3",
+    "ElevenLabs_Ostry_trzask_niosący_się_po_zamarzniętym_krajobrazie,_jakby_lód_pękał_pod_naciskiem.mp3"
+];
+
+function playRandomShatterSound() {
+    const url = shatterSoundUrls[Math.floor(Math.random() * shatterSoundUrls.length)];
+    const audio = new Audio(url);
+    audio.volume = 0.8;
+    audio.play().catch(e => console.log("Sound play blocked", e));
 }
 
 const depthSlider = { min: "-500", max: "500000", value: "0" };
@@ -197,13 +191,6 @@ if (introScreenElement) {
             const h2 = introScreenElement.querySelector('h2');
             if (h2) h2.classList.add('visible');
             introState = 1;
-            
-            // Autoplay audio on first interaction
-            if (bgAudio && !isAudioPlaying) {
-                bgAudio.play().catch(e => console.log(e));
-                audioToggle.innerText = "🔊";
-                isAudioPlaying = true;
-            }
         } else if (introState === 1) {
             introState = 2;
             
@@ -677,6 +664,13 @@ function spawnNextGroup() {
         // Logika pojedynczego kliknięcia: NATYCHMIASTOWY rozpad FG, po chwili BG, a potem najazd na kolejne zdjęcie
         div.addEventListener('click', (e) => {
             e.stopPropagation();
+            if (div.dataset.shattered === "true") return; // Zabezpieczenie przed podwójnym kliknięciem
+            div.dataset.shattered = "true";
+            
+            // Odegraj losowy dźwięk pękania lodu
+            playRandomShatterSound();
+            
+            div.classList.remove('clickable-frame');
             
             const fgDiv = document.querySelector(`.layer[data-group-id="${layer.groupId}"][data-layer-type$="_fg"]`);
             const bgDiv = document.querySelector(`.layer[data-group-id="${layer.groupId}"][data-layer-type$="_bg"]`);
